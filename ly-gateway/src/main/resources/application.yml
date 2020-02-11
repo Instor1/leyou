@@ -1,0 +1,43 @@
+#tomcat服务端口
+server:
+  port: 10010
+#服务名称
+spring:
+  application:
+    name: api-gateway
+
+#注册中心的客户端配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    #registry-fetch-interval-seconds: 5 #拉取eureka服务信息的时间间隔
+
+#zuul网关的配置项
+zuul:
+  prefix: /api #路由前缀
+  routes:
+    item-service: /item/** # 商品微服务的映射路径
+    search-service: /search/** # 搜索微服务
+    user-service: /user/** # 用户微服务
+    auth-service: /auth/** # 授权中心微服务
+    upload-servie:
+      path: /upload/**
+      serviceId: upload-service
+      strip-prefix: false
+
+#熔断器的配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000 # 熔断超时时长：5000ms
+
+#负载均衡
+ribbon:
+  ConnectTimeout: 2000 # ribbon链接超时时长
+  ReadTimeout: 2000 # ribbon读取超时时长
+  MaxAutoRetries: 0  # 当前服务重试次数
+  MaxAutoRetriesNextServer: 0  # 切换服务重试次数

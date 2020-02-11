@@ -1,0 +1,33 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: user-service   #同步zuul网关的routes下添加 user-service: /user/**
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/maven
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  rabbitmq:
+    host: 192.168.1.22
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+  redis:
+    host: 192.168.1.22
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+
+mybatis:
+  type-aliases-package: com.leyou.user.pojo
+
+ly:
+  user:
+    exchange: ly.sms.exchange
+    routingKey: sms.verify.code
+    code_expire_time: 10
